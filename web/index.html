@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarePulse Chennai | Unified Healthcare Entrance & Login Gateway</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy-900: #0b132b;
+      --navy-800: #1c2541;
+      --navy-700: #2a375a;
+      --cyan-400: #38bdf8;
+      --teal-400: #2dd4bf;
+    }
+
+    body.entrance-body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 15% 20%, #1e293b 0%, #0b132b 50%, #070d1f 100%);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Glowing decorative orbs */
+    .glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(95px);
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.55;
+      animation: floatOrb 12s ease-in-out infinite alternate;
+    }
+    .glow-orb-1 { width: 450px; height: 450px; background: #0284c7; top: -100px; left: -100px; }
+    .glow-orb-2 { width: 500px; height: 500px; background: #0d9488; bottom: -150px; right: -100px; animation-delay: -6s; }
+    .glow-orb-3 { width: 320px; height: 320px; background: #4f46e5; top: 40%; left: 55%; animation-delay: -3s; opacity: 0.3; }
+
+    @keyframes floatOrb {
+      0% { transform: translateY(0px) scale(1); }
+      100% { transform: translateY(40px) scale(1.08); }
+    }
+
+    .entrance-header {
+      position: relative;
+      z-index: 10;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .brand-logo-glow {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      text-decoration: none;
+      color: white;
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-pulse-box {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #0284c7, #0d9488);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.45);
+      font-size: 1.3rem;
+      color: white;
+      animation: heartPulse 2.5s infinite;
+    }
+
+    @keyframes heartPulse {
+      0% { transform: scale(1); }
+      14% { transform: scale(1.1); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.15); }
+      70% { transform: scale(1); }
+    }
+
+    .city-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      padding: 0.35rem 0.9rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #cbd5e1;
+    }
+
+    .entrance-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+      padding: 2rem 1.5rem;
+      max-width: 1240px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .gateway-split {
+      display: grid;
+      grid-template-columns: 1.05fr 1.05fr;
+      gap: 2.5rem;
+      width: 100%;
+      align-items: center;
+    }
+
+    .showcase-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(90deg, rgba(2, 132, 199, 0.2), rgba(13, 148, 136, 0.2));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--cyan-400);
+      margin-bottom: 1.2rem;
+      backdrop-filter: blur(6px);
+    }
+
+    .showcase-title {
+      font-size: 2.7rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #ffffff 40%, #bae6fd 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .showcase-subtitle {
+      font-size: 1.05rem;
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 1.8rem;
+    }
+
+    .hospital-ticker {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .ticker-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 0.8rem 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      backdrop-filter: blur(8px);
+      transition: all 0.2s ease;
+    }
+
+    .ticker-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(56, 189, 248, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .ticker-icon {
+      font-size: 1.3rem;
+      background: rgba(56, 189, 248, 0.15);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ticker-text strong { display: block; font-size: 0.88rem; color: white; }
+    .ticker-text span { font-size: 0.75rem; color: #94a3b8; }
+
+    /* Glassmorphism Card */
+    .login-glass-card {
+      background: rgba(28, 37, 65, 0.75);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 24px;
+      padding: 2.2rem 2.4rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(2, 132, 199, 0.18);
+      position: relative;
+    }
+
+    .login-glass-card::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 15%;
+      right: 15%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #38bdf8, #2dd4bf, transparent);
+    }
+
+    /* Role switcher */
+    .role-switcher {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: rgba(11, 19, 43, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0.35rem;
+      border-radius: 14px;
+      margin-bottom: 1.4rem;
+    }
+
+    .role-btn {
+      padding: 0.7rem 0.8rem;
+      border-radius: 10px;
+      border: none;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.25s ease;
+    }
+
+    .role-btn.active {
+      background: linear-gradient(135deg, #0284c7, #02669b);
+      color: white;
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
+    }
+
+    .role-btn.doctor.active {
+      background: linear-gradient(135deg, #0d9488, #0f766e);
+      box-shadow: 0 4px 15px rgba(13, 148, 136, 0.4);
+    }
+
+    /* Mode pill switcher (Sign In vs Sign Up) */
+    .mode-sub-switcher {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1.4rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 0.8rem;
+    }
+
+    .mode-link {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      position: relative;
+      padding-bottom: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .mode-link.active {
+      color: var(--cyan-400);
+    }
+
+    .mode-link.active::after {
+      content: "";
+      position: absolute;
+      bottom: -0.85rem;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--cyan-400);
+      box-shadow: 0 0 10px var(--cyan-400);
+    }
+
+    /* Input Fields */
+    .form-group-glow { margin-bottom: 1.1rem; }
+    .form-group-glow label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 0.4rem;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 1rem;
+      font-size: 1rem;
+      color: #64748b;
+      pointer-events: none;
+    }
+
+    .input-glass {
+      width: 100%;
+      background: rgba(11, 19, 43, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 0.8rem 1rem 0.8rem 2.7rem;
+      color: white;
+      font-size: 0.92rem;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .input-glass:focus {
+      border-color: var(--cyan-400);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+      background: rgba(11, 19, 43, 0.9);
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+    }
+
+    .btn-glow-submit {
+      width: 100%;
+      padding: 0.9rem;
+      border-radius: 12px;
+      border: none;
+      font-size: 0.98rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(135deg, #0284c7 0%, #0d9488 100%);
+      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-top: 0.6rem;
+    }
+
+    .btn-glow-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(2, 132, 199, 0.5);
+      filter: brightness(1.08);
+    }
+
+    /* Not Registered Warning Box */
+    .not-registered-banner {
+      display: none;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      margin-bottom: 1.2rem;
+      font-size: 0.86rem;
+      color: #fca5a5;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .not-registered-banner button {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 0.35rem 0.8rem;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      display: inline-block;
+    }
+
+    /* VIP Auto-fill Chips */
+    .vip-chips-title {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #94a3b8;
+      font-weight: 700;
+      margin: 1.4rem 0 0.7rem;
+    }
+
+    .vip-chip {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 0.55rem 0.8rem;
+      margin-bottom: 0.45rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .vip-chip:hover {
+      background: rgba(56, 189, 248, 0.12);
+      border-color: rgba(56, 189, 248, 0.35);
+      transform: translateX(3px);
+    }
+
+    .vip-chip-name { font-weight: 700; font-size: 0.82rem; color: #e2e8f0; }
+    .vip-chip-role { font-size: 0.72rem; color: #94a3b8; }
+    .vip-chip-badge { font-size: 0.7rem; background: rgba(255, 255, 255, 0.1); padding: 0.2rem 0.5rem; border-radius: 6px; color: var(--cyan-400); font-weight: 600; }
+
+    .entrance-footer {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 1.2rem;
+      font-size: 0.82rem;
+      color: #64748b;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    @media (max-width: 900px) {
+      .gateway-split { grid-template-columns: 1fr; }
+      .hospital-ticker { grid-template-columns: 1fr; }
+      .showcase-title { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body class="entrance-body">
+
+  <!-- Floating Glowing Orbs -->
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
+  <div class="glow-orb glow-orb-3"></div>
+
+  <!-- Header -->
+  <header class="entrance-header">
+    <a href="index.html" class="brand-logo-glow">
+      <div class="logo-pulse-box">✚</div>
+      <div>
+        CarePulse <span style="color: var(--cyan-400)">Chennai</span>
+      </div>
+    </a>
+
+    <div class="header-pills">
+      <div class="city-badge">📍 Chennai Healthcare Network</div>
+      <div class="city-badge" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3); color: #34d399;">
+        ● 24/7 Helpline: 108 / +91 44 2829 0200
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Entrance Gateway -->
+  <main class="entrance-main">
+    <div class="gateway-split">
+
+      <!-- Left Decorative Showcase -->
+      <div class="showcase-pane">
+        <div class="showcase-badge">
+          ✨ Unified Healthcare Gateway of Chennai
+        </div>
+
+        <h1 class="showcase-title">
+          World-Class Medical Care, Unified in One Portal
+        </h1>
+
+        <p class="showcase-subtitle">
+          Welcome to CarePulse Chennai. Directed by <strong>Abhilash</strong>, connecting patients directly with leading specialists from Apollo Hospitals, Kauvery Hospital, and MIOT International.
+        </p>
+
+        <!-- Hospital Network Grid -->
+        <div class="hospital-ticker">
+          <div class="ticker-card">
+            <div class="ticker-icon">🏥</div>
+            <div class="ticker-text">
+              <strong>Apollo Hospitals</strong>
+              <span>Greams Road • Cardiology</span>
+            </div>
+          </div>
+
+          <div class="ticker-card">
+            <div class="ticker-icon">🩺</div>
+            <div class="ticker-text">
+              <strong>Kauvery Hospital</strong>
+              <span>Alwarpet • Pediatrics & OPD</span>
+            </div>
+          </div>
+
+          <div class="ticker-card">
+            <div class="ticker-icon">🦴</div>
+            <div class="ticker-text">
+              <strong>MIOT International</strong>
+              <span>Manapakkam • Orthopedics</span>
+            </div>
+          </div>
+
+          <div class="ticker-card">
+            <div class="ticker-icon">🧠</div>
+            <div class="ticker-text">
+              <strong>SIMS & Gleneagles</strong>
+              <span>Vadapalani • Neurology & Skin</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Direct Guest Option -->
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 255, 255, 0.12); padding: 1rem 1.2rem; border-radius: 14px; display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <div style="font-weight: 700; font-size: 0.92rem; color: #f1f5f9;">First Time Patient?</div>
+            <div style="font-size: 0.8rem; color: #94a3b8;">Explore Chennai doctors & services without signing up</div>
+          </div>
+          <button class="btn btn-sm btn-outline" style="border-color: var(--cyan-400); color: var(--cyan-400);" onclick="quickGuestAccess()">
+            Browse as Guest →
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Glassmorphism Login & Sign-Up Card -->
+      <div class="login-glass-card">
+
+        <!-- Role Switcher (Patient vs Doctor) -->
+        <div class="role-switcher">
+          <button class="role-btn active" id="tabPatient" onclick="switchRole('patient')">
+            <span>👤</span> Patient Portal
+          </button>
+          <button class="role-btn doctor" id="tabDoctor" onclick="switchRole('doctor')">
+            <span>🩺</span> Doctor & Staff
+          </button>
+        </div>
+
+        <!-- Mode Sub-Switcher: Sign In vs Sign Up -->
+        <div class="mode-sub-switcher">
+          <span class="mode-link active" id="modeSignIn" onclick="setAuthMode('login')">Sign In</span>
+          <span class="mode-link" id="modeSignUp" onclick="setAuthMode('signup')">New Account? Sign Up</span>
+        </div>
+
+        <!-- Not Registered Interactive Alert Banner (Appears when email is not found) -->
+        <div class="not-registered-banner" id="notRegisteredBanner">
+          <div>⚠️ <strong>Account not found!</strong> No account is registered with this email.</div>
+          <div style="margin-top: 0.3rem;">Please click below to create your account now:</div>
+          <button type="button" onclick="triggerAutoSignUp()">
+            ➕ Create Account Now
+          </button>
+        </div>
+
+        <!-- ================= SIGN IN FORM ================= -->
+        <form id="signInForm" onsubmit="handleSignInSubmit(event)">
+          <div class="form-group-glow">
+            <label id="signInEmailLabel">Email Address</label>
+            <div class="input-wrapper">
+              <span class="input-icon" id="signInEmailIcon">✉️</span>
+              <input type="email" id="signInEmail" class="input-glass" placeholder="e.g. senthil@example.com" required>
+            </div>
+          </div>
+
+          <div class="form-group-glow">
+            <label>Password</label>
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+              <input type="password" id="signInPassword" class="input-glass" placeholder="••••••••" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-glow-submit" id="submitSignInBtn">
+            <span>🔐</span> Sign In
+          </button>
+
+          <div style="text-align: center; margin-top: 1rem; font-size: 0.85rem; color: #94a3b8;">
+            Don't have an account? <a href="javascript:void(0)" onclick="setAuthMode('signup')" style="color: var(--cyan-400); font-weight: 700; text-decoration: none;">Sign Up here</a>
+          </div>
+        </form>
+
+        <!-- ================= SIGN UP FORM ================= -->
+        <form id="signUpForm" onsubmit="handleSignUpSubmit(event)" style="display: none;">
+          <div class="form-group-glow">
+            <label id="signUpNameLabel">Full Name</label>
+            <div class="input-wrapper">
+              <span class="input-icon">👤</span>
+              <input type="text" id="signUpName" class="input-glass" placeholder="e.g. Rajesh Kannan" required>
+            </div>
+          </div>
+
+          <div class="form-group-glow">
+            <label>Email Address</label>
+            <div class="input-wrapper">
+              <span class="input-icon">✉️</span>
+              <input type="email" id="signUpEmail" class="input-glass" placeholder="rajesh@example.com" required>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group-glow">
+              <label>Phone (+91)</label>
+              <div class="input-wrapper">
+                <span class="input-icon">📞</span>
+                <input type="tel" id="signUpPhone" class="input-glass" placeholder="98401 22334">
+              </div>
+            </div>
+            <!-- Doctor-only field: Specialty -->
+            <div class="form-group-glow" id="doctorSpecialtyGroup" style="display: none;">
+              <label>Specialty</label>
+              <div class="input-wrapper">
+                <span class="input-icon">🩺</span>
+                <select id="signUpSpecialty" class="input-glass" style="padding-left: 2.7rem;">
+                  <option value="Cardiology">Cardiology</option>
+                  <option value="Pediatrics">Pediatrics</option>
+                  <option value="Orthopedics">Orthopedics</option>
+                  <option value="Neurology">Neurology</option>
+                  <option value="Dermatology">Dermatology</option>
+                  <option value="General Medicine">General Medicine</option>
+                  <option value="Dentistry">Dentistry</option>
+                  <option value="Oncology">Oncology</option>
+                </select>
+              </div>
+            </div>
+            <!-- Patient-only field: Age -->
+            <div class="form-group-glow" id="patientAgeGroup">
+              <label>Age</label>
+              <div class="input-wrapper">
+                <span class="input-icon">🎂</span>
+                <input type="number" id="signUpAge" class="input-glass" value="32" min="1" max="110">
+              </div>
+            </div>
+          </div>
+
+          <!-- Doctor-only field: Hospital affiliation -->
+          <div class="form-group-glow" id="doctorHospitalGroup" style="display: none;">
+            <label>Hospital Affiliation</label>
+            <div class="input-wrapper">
+              <span class="input-icon">🏥</span>
+              <select id="signUpHospital" class="input-glass" style="padding-left: 2.7rem;">
+                <option value="Apollo Hospitals, Greams Road, Chennai">Apollo Hospitals, Greams Road</option>
+                <option value="Kauvery Hospital, Alwarpet, Chennai">Kauvery Hospital, Alwarpet</option>
+                <option value="MIOT International, Manapakkam, Chennai">MIOT International, Manapakkam</option>
+                <option value="SIMS Hospital, Vadapalani, Chennai">SIMS Hospital, Vadapalani</option>
+                <option value="Gleneagles Global Health City, Chennai">Gleneagles Global Health City</option>
+                <option value="Fortis Malar Hospital, Adyar, Chennai">Fortis Malar Hospital, Adyar</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group-glow">
+            <label>Create Password</label>
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+              <input type="password" id="signUpPassword" class="input-glass" placeholder="••••••••" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-glow-submit" id="submitSignUpBtn">
+            <span>✨</span> Create Account
+          </button>
+
+          <div style="text-align: center; margin-top: 1rem; font-size: 0.85rem; color: #94a3b8;">
+            Already have an account? <a href="javascript:void(0)" onclick="setAuthMode('login')" style="color: var(--cyan-400); font-weight: 700; text-decoration: none;">Sign In here</a>
+          </div>
+        </form>
+
+        <!-- VIP Auto-fill Verified Credentials -->
+        <div class="vip-chips-title" id="vipTitle">
+          ⚡ One-Click Verified Accounts:
+        </div>
+
+        <!-- Patient Demo Chips -->
+        <div id="patientChips">
+          <div class="vip-chip" onclick="fillQuickAuth('senthil@example.com', 'patient123')">
+            <div>
+              <div class="vip-chip-name">K. Senthil Nathan</div>
+              <div class="vip-chip-role">Registered Patient • Chennai</div>
+            </div>
+            <span class="vip-chip-badge">Click to Fill</span>
+          </div>
+
+          <div class="vip-chip" onclick="fillQuickAuth('deepa.r@example.com', 'patient123')">
+            <div>
+              <div class="vip-chip-name">Deepa Raghavan</div>
+              <div class="vip-chip-role">Telehealth Patient Member</div>
+            </div>
+            <span class="vip-chip-badge">Click to Fill</span>
+          </div>
+        </div>
+
+        <!-- Doctor Demo Chips -->
+        <div id="doctorChips" style="display: none;">
+          <div class="vip-chip" onclick="fillQuickAuth('abhilash@carepulse.org', 'abhilash123')">
+            <div>
+              <div class="vip-chip-name" style="color: var(--cyan-400);">👑 Abhilash (Owner & Director)</div>
+              <div class="vip-chip-role">Full Super Administrator Access</div>
+            </div>
+            <span class="vip-chip-badge">Owner</span>
+          </div>
+
+          <div class="vip-chip" onclick="fillQuickAuth('dr.karthik@apollo.chennai.in', 'apollo123')">
+            <div>
+              <div class="vip-chip-name">Dr. K. Karthikeyan</div>
+              <div class="vip-chip-role">Cardiologist • Apollo Greams Rd</div>
+            </div>
+            <span class="vip-chip-badge">Doctor</span>
+          </div>
+
+          <div class="vip-chip" onclick="fillQuickAuth('dr.priya@kauvery.chennai.in', 'kauvery123')">
+            <div>
+              <div class="vip-chip-name">Dr. Priya Sundaram</div>
+              <div class="vip-chip-role">Pediatrician • Kauvery Alwarpet</div>
+            </div>
+            <span class="vip-chip-badge">Doctor</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="entrance-footer">
+    CarePulse Chennai Multispecialty Hospital Network • Directed by <strong>Abhilash</strong> • 21 Greams Lane, Thousand Lights, Chennai 600006
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script>
+    let currentRole = 'patient'; // 'patient' or 'doctor'
+    let currentAuthMode = 'login'; // 'login' or 'signup'
+    let lastFailedEmail = '';
+
+    function switchRole(role) {
+      currentRole = role;
+      hideNotRegisteredBanner();
+
+      const tabP = document.getElementById('tabPatient');
+      const tabD = document.getElementById('tabDoctor');
+      const patientChips = document.getElementById('patientChips');
+      const doctorChips = document.getElementById('doctorChips');
+      const docHospital = document.getElementById('doctorHospitalGroup');
+      const docSpecialty = document.getElementById('doctorSpecialtyGroup');
+      const patientAge = document.getElementById('patientAgeGroup');
+      const signUpNameLabel = document.getElementById('signUpNameLabel');
+
+      if (role === 'patient') {
+        tabP.classList.add('active');
+        tabD.classList.remove('active');
+        patientChips.style.display = 'block';
+        doctorChips.style.display = 'none';
+        docHospital.style.display = 'none';
+        docSpecialty.style.display = 'none';
+        patientAge.style.display = 'block';
+        signUpNameLabel.textContent = 'Patient Full Name';
+      } else {
+        tabD.classList.add('active');
+        tabP.classList.remove('active');
+        patientChips.style.display = 'none';
+        doctorChips.style.display = 'block';
+        docHospital.style.display = 'block';
+        docSpecialty.style.display = 'block';
+        patientAge.style.display = 'none';
+        signUpNameLabel.textContent = 'Doctor Full Name (e.g. Dr. Ramesh Kumar)';
+      }
+
+      updateSubmitButtonText();
+    }
+
+    function setAuthMode(mode) {
+      currentAuthMode = mode;
+      hideNotRegisteredBanner();
+
+      const signInLink = document.getElementById('modeSignIn');
+      const signUpLink = document.getElementById('modeSignUp');
+      const signInForm = document.getElementById('signInForm');
+      const signUpForm = document.getElementById('signUpForm');
+
+      if (mode === 'login') {
+        signInLink.classList.add('active');
+        signUpLink.classList.remove('active');
+        signInForm.style.display = 'block';
+        signUpForm.style.display = 'none';
+      } else {
+        signUpLink.classList.add('active');
+        signInLink.classList.remove('active');
+        signInForm.style.display = 'none';
+        signUpForm.style.display = 'block';
+
+        if (lastFailedEmail) {
+          document.getElementById('signUpEmail').value = lastFailedEmail;
+        }
+      }
+
+      updateSubmitButtonText();
+    }
+
+    function updateSubmitButtonText() {
+      const signInBtn = document.getElementById('submitSignInBtn');
+      const signUpBtn = document.getElementById('submitSignUpBtn');
+
+      if (currentRole === 'patient') {
+        signInBtn.innerHTML = '<span>🔐</span> Sign In to Patient Portal';
+        signUpBtn.innerHTML = '<span>✨</span> Create Patient Account';
+      } else {
+        signInBtn.innerHTML = '<span>🩺</span> Access Clinical Console';
+        signUpBtn.innerHTML = '<span>🩺</span> Register Doctor / Staff Account';
+      }
+    }
+
+    function fillQuickAuth(email, pass) {
+      setAuthMode('login');
+      document.getElementById('signInEmail').value = email;
+      document.getElementById('signInPassword').value = pass;
+    }
+
+    function showNotRegisteredBanner(email) {
+      lastFailedEmail = email;
+      const banner = document.getElementById('notRegisteredBanner');
+      banner.style.display = 'block';
+    }
+
+    function hideNotRegisteredBanner() {
+      const banner = document.getElementById('notRegisteredBanner');
+      banner.style.display = 'none';
+    }
+
+    function triggerAutoSignUp() {
+      setAuthMode('signup');
+    }
+
+    function quickGuestAccess() {
+      const guest = {
+        token: 'GUEST-' + Date.now(),
+        name: 'Guest Patient (Chennai)',
+        email: 'guest@chennai-health.org',
+        role: 'Patient'
+      };
+      localStorage.setItem('carepulse_patient_auth', JSON.stringify(guest));
+      showToast('Entering as Guest Patient...', 'success');
+      setTimeout(() => {
+        window.location.href = 'patient.html';
+      }, 600);
+    }
+
+    // Handle Login
+    async function handleSignInSubmit(e) {
+      e.preventDefault();
+      hideNotRegisteredBanner();
+
+      const btn = document.getElementById('submitSignInBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳</span> Verifying credentials...';
+
+      const email = document.getElementById('signInEmail').value.trim();
+      const password = document.getElementById('signInPassword').value.trim();
+
+      try {
+        const res = await api.login(email, password, currentRole);
+        const userData = res.data;
+
+        if (userData.role === 'Patient') {
+          localStorage.setItem('carepulse_patient_auth', JSON.stringify(userData));
+          showToast(`Welcome back, ${userData.name}!`, 'success');
+          setTimeout(() => { window.location.href = 'patient.html'; }, 600);
+        } else {
+          localStorage.setItem('carepulse_staff_auth', JSON.stringify(userData));
+          showToast(`Welcome Dr./Staff ${userData.name}!`, 'success');
+          setTimeout(() => { window.location.href = 'admin.html'; }, 600);
+        }
+      } catch (err) {
+        btn.disabled = false;
+        updateSubmitButtonText();
+
+        if (err.notRegistered) {
+          showNotRegisteredBanner(email);
+        } else {
+          showToast(err.message || 'Login failed', 'error');
+        }
+      }
+    }
+
+    // Handle Sign Up
+    async function handleSignUpSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitSignUpBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳</span> Creating account...';
+
+      const name = document.getElementById('signUpName').value.trim();
+      const email = document.getElementById('signUpEmail').value.trim();
+      const phone = document.getElementById('signUpPhone').value.trim();
+      const password = document.getElementById('signUpPassword').value.trim();
+      const specialty = document.getElementById('signUpSpecialty').value;
+      const hospital = document.getElementById('signUpHospital').value;
+
+      try {
+        const res = await api.register({
+          name,
+          email,
+          phone,
+          password,
+          roleType: currentRole,
+          specialty,
+          hospital
+        });
+
+        const userData = res.data;
+        showToast('Account created successfully!', 'success');
+
+        if (userData.role === 'Patient') {
+          localStorage.setItem('carepulse_patient_auth', JSON.stringify(userData));
+          setTimeout(() => { window.location.href = 'patient.html'; }, 600);
+        } else {
+          localStorage.setItem('carepulse_staff_auth', JSON.stringify(userData));
+          setTimeout(() => { window.location.href = 'admin.html'; }, 600);
+        }
+      } catch (err) {
+        btn.disabled = false;
+        updateSubmitButtonText();
+        showToast(err.message || 'Sign up failed', 'error');
+      }
+    }
+  </script>
+</body>
+</html>

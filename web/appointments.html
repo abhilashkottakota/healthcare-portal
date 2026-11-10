@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Appointments | CarePulse Healthcare Portal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    .appt-card {
+      background: white;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      margin-bottom: 1.2rem;
+      box-shadow: var(--shadow-sm);
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+      transition: var(--transition);
+    }
+    .appt-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: #cbd5e1;
+    }
+    .appt-header-row {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+    .appt-id-badge {
+      font-family: monospace;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+    .appt-actions-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.6rem;
+      border-left: 1px solid var(--border);
+      padding-left: 1.5rem;
+    }
+    .notes-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+      color: #334155;
+      margin-top: 0.8rem;
+    }
+    @media (max-width: 768px) {
+      .appt-card { grid-template-columns: 1fr; }
+      .appt-actions-col { border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="patient.html" class="nav-logo">
+        <div class="nav-logo-icon">✚</div>
+        <span>CarePulse<span style="color: var(--secondary)">Chennai</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="patient.html#search-section" class="nav-link">Find Doctors</a></li>
+        <li><a href="patient.html#services-section" class="nav-link">Master Checks</a></li>
+        <li><a href="appointments.html" class="nav-link active">My Appointments</a></li>
+        <li><a href="admin.html" class="nav-link">🔒 Staff Portal</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="patient.html#search-section" class="btn btn-primary btn-sm">+ Book New Visit</a>
+        <button class="btn btn-outline btn-sm" onclick="logoutSession()" style="color: var(--danger); border-color: var(--danger);">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+      <div>
+        <h1 style="font-size: 2rem; font-weight: 800; color: var(--text-dark); margin-bottom: 0.3rem;">Appointment Management</h1>
+        <p style="color: var(--text-muted); font-size: 1rem;">View scheduled clinical appointments, reschedule, edit clinical notes, or print hospital check-in slips.</p>
+      </div>
+      <div>
+        <a href="index.html" class="btn btn-outline">← Back to Doctors</a>
+      </div>
+    </div>
+
+    <!-- Quick Stats Overview -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+      <div style="background: white; border: 1px solid var(--border); padding: 1.1rem; border-radius: 10px; text-align: center;">
+        <div style="font-size: 1.8rem; font-weight: 800; color: var(--primary);" id="statTotal">0</div>
+        <div style="font-size: 0.82rem; color: var(--text-muted); font-weight: 600;">TOTAL BOOKINGS</div>
+      </div>
+      <div style="background: white; border: 1px solid var(--border); padding: 1.1rem; border-radius: 10px; text-align: center;">
+        <div style="font-size: 1.8rem; font-weight: 800; color: var(--success);" id="statUpcoming">0</div>
+        <div style="font-size: 0.82rem; color: var(--text-muted); font-weight: 600;">UPCOMING VISITS</div>
+      </div>
+      <div style="background: white; border: 1px solid var(--border); padding: 1.1rem; border-radius: 10px; text-align: center;">
+        <div style="font-size: 1.8rem; font-weight: 800; color: var(--secondary);" id="statCompleted">0</div>
+        <div style="font-size: 0.82rem; color: var(--text-muted); font-weight: 600;">COMPLETED</div>
+      </div>
+      <div style="background: white; border: 1px solid var(--border); padding: 1.1rem; border-radius: 10px; text-align: center;">
+        <div style="font-size: 1.8rem; font-weight: 800; color: var(--danger);" id="statCancelled">0</div>
+        <div style="font-size: 0.82rem; color: var(--text-muted); font-weight: 600;">CANCELLED</div>
+      </div>
+    </div>
+
+    <!-- Filter & Search Controls -->
+    <div style="background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.4rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.8rem;">
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;" id="statusFilterPills">
+        <button class="filter-tag active" data-status="All">All</button>
+        <button class="filter-tag" data-status="Confirmed">Confirmed</button>
+        <button class="filter-tag" data-status="Completed">Completed</button>
+        <button class="filter-tag" data-status="Cancelled">Cancelled</button>
+      </div>
+
+      <div style="display: flex; gap: 0.8rem; align-items: center; min-width: 280px;">
+        <input type="text" id="appointmentSearch" class="form-control" placeholder="Search by patient, doctor, ID..." oninput="filterAppointments()">
+      </div>
+    </div>
+
+    <!-- Appointments Container -->
+    <div id="appointmentsList">
+      <!-- Injected via JavaScript -->
+    </div>
+  </div>
+
+  <!-- Reschedule Modal -->
+  <div class="modal-overlay" id="rescheduleModal">
+    <div class="modal-box" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Reschedule Appointment</h3>
+        <button class="modal-close" onclick="closeRescheduleModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="rescheduleApptId">
+        <div class="form-group">
+          <label class="form-label">Doctor</label>
+          <input type="text" id="rescheduleDoctorName" class="form-control" readonly disabled>
+        </div>
+        <div class="form-group">
+          <label class="form-label">New Appointment Date</label>
+          <input type="date" id="rescheduleDate" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Select Time Slot</label>
+          <select id="rescheduleSlotSelect" class="form-control">
+            <option value="09:00 AM">09:00 AM</option>
+            <option value="10:30 AM">10:30 AM</option>
+            <option value="11:30 AM">11:30 AM</option>
+            <option value="01:30 PM">01:30 PM</option>
+            <option value="03:00 PM">03:00 PM</option>
+            <option value="04:30 PM">04:30 PM</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Reason for Rescheduling</label>
+          <input type="text" id="rescheduleReason" class="form-control" placeholder="e.g. Schedule conflict, feeling better">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeRescheduleModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="submitReschedule()">Confirm Reschedule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Notes Modal -->
+  <div class="modal-overlay" id="notesModal">
+    <div class="modal-box" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Clinical & Patient Notes</h3>
+        <button class="modal-close" onclick="closeNotesModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="notesApptId">
+        <div class="form-group">
+          <label class="form-label">Update Symptoms / Notes for Appointment</label>
+          <textarea id="notesContent" class="form-control" rows="4" placeholder="Enter updated medical notes, symptoms progress, or instructions..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeNotesModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="submitNotes()">Save Notes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Printable Slip Overlay (Hidden in screen, shown on print or preview) -->
+  <div class="modal-overlay" id="slipModal">
+    <div class="modal-box" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Official Appointment Slip</h3>
+        <button class="modal-close" onclick="closeSlipModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="slipContent">
+        <!-- Rendered dynamically -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeSlipModal()">Close</button>
+        <button class="btn btn-primary" onclick="window.print()">🖨 Print Official Slip</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/appointments.js"></script>
+  <script>
+    function logoutSession() {
+      localStorage.removeItem('carepulse_patient_auth');
+      localStorage.removeItem('carepulse_staff_auth');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

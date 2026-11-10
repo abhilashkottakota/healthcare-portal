@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Portal | CarePulse Chennai Healthcare</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    // Enforce patient authentication
+    const auth = localStorage.getItem('carepulse_patient_auth');
+    if (!auth) {
+      window.location.href = 'index.html';
+    }
+  </script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="patient.html" class="nav-logo">
+        <div class="nav-logo-icon">✚</div>
+        <span>CarePulse<span style="color: var(--secondary)">Chennai</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#search-section" class="nav-link">Find Doctors</a></li>
+        <li><a href="#services-section" class="nav-link">Master Checks</a></li>
+        <li><a href="appointments.html" class="nav-link">My Appointments</a></li>
+        <li><a href="admin.html" class="nav-link">🔒 Staff Portal</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <span id="patientWelcomeBadge" class="badge badge-confirmed" style="padding: 0.4rem 0.8rem; font-size: 0.82rem;">👤 Patient</span>
+        <button class="btn btn-outline btn-sm" onclick="logoutPatient()" style="color: var(--danger); border-color: var(--danger);">Logout</button>
+        <button class="btn btn-primary btn-sm" onclick="openBookingModal()">+ Book Visit</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">🩺 Top Specialists & Hospitals Across Chennai</div>
+      <h1>Quality Healthcare in Chennai, Scheduled with Ease</h1>
+      <p>Discover leading specialists from Apollo Greams Road, Kauvery Hospital, MIOT International, SIMS, and Gleneagles. Book in-person OPD or teleconsultations in seconds.</p>
+    </div>
+
+    <!-- Quick Search Widget -->
+    <div class="search-bar-wrapper" id="search-section">
+      <div class="search-input-group">
+        <span style="color: var(--text-muted)">🔍</span>
+        <input type="text" id="searchInput" placeholder="Search doctor, hospital (Apollo, Kauvery, MIOT), or symptoms...">
+      </div>
+
+      <div class="search-input-group">
+        <span style="color: var(--text-muted)">🩺</span>
+        <select id="specialtySelect">
+          <option value="All">All Specialties</option>
+          <option value="Cardiology">Cardiology</option>
+          <option value="Neurology">Neurology</option>
+          <option value="Pediatrics">Pediatrics</option>
+          <option value="Orthopedics">Orthopedics</option>
+          <option value="Dermatology">Dermatology</option>
+          <option value="General Medicine">General Medicine</option>
+          <option value="Dentistry">Dentistry</option>
+          <option value="Oncology">Oncology</option>
+        </select>
+      </div>
+
+      <button class="btn btn-primary" style="height: 100%; border-radius: 8px;" onclick="applyFilters()">Search</button>
+    </div>
+  </section>
+
+  <!-- Stats Ribbon -->
+  <section class="stats-ribbon">
+    <div class="stat-item">
+      <div class="stat-value" id="statDoctors">8+</div>
+      <div class="stat-label">Chennai Specialists</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">8</div>
+      <div class="stat-label">Speciality Departments</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" id="statBookings">2,500+</div>
+      <div class="stat-label">Consultations Booked</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">99.4%</div>
+      <div class="stat-label">Patient Trust Rating</div>
+    </div>
+  </section>
+
+  <!-- Available Services Section -->
+  <section class="container" id="services-section">
+    <div class="section-header">
+      <h2 class="section-title">Available Medical Services & Packages</h2>
+      <p class="section-subtitle">Preventative full body checks, cardiac screenings, and specialized diagnostic care across partner facilities in Chennai.</p>
+    </div>
+
+    <div class="services-grid" id="servicesGrid">
+      <!-- Injected via JavaScript -->
+    </div>
+  </section>
+
+  <!-- Doctors Directory Section -->
+  <section class="container" style="background: white; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); max-width: 100%;">
+    <div class="container" style="padding-top: 1rem;">
+      <div class="section-header">
+        <h2 class="section-title">Verified Chennai Doctors & Specialists</h2>
+        <p class="section-subtitle">Book confirmed consultation slots at Apollo Greams Rd, Kauvery Alwarpet, MIOT Manapakkam, and more.</p>
+      </div>
+
+      <!-- Specialty Tag Filters -->
+      <div class="filter-tags" id="filterTags">
+        <button class="filter-tag active" data-specialty="All">All Specialties</button>
+        <button class="filter-tag" data-specialty="Cardiology">Cardiology</button>
+        <button class="filter-tag" data-specialty="Neurology">Neurology</button>
+        <button class="filter-tag" data-specialty="Pediatrics">Pediatrics</button>
+        <button class="filter-tag" data-specialty="Orthopedics">Orthopedics</button>
+        <button class="filter-tag" data-specialty="Dermatology">Dermatology</button>
+        <button class="filter-tag" data-specialty="General Medicine">General Medicine</button>
+        <button class="filter-tag" data-specialty="Dentistry">Dentistry</button>
+        <button class="filter-tag" data-specialty="Oncology">Oncology</button>
+      </div>
+
+      <!-- Doctors Grid -->
+      <div class="doctors-grid" id="doctorsGrid">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Appointment Booking Modal -->
+  <div class="modal-overlay" id="bookingModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="bookingModalTitle">Book Doctor Appointment</h3>
+        <button class="modal-close" onclick="closeBookingModal()">&times;</button>
+      </div>
+
+      <div class="modal-body" id="bookingModalBody">
+        <form id="bookingForm" onsubmit="handleBookingSubmit(event)">
+          <!-- Doctor Selection -->
+          <div class="form-group">
+            <label class="form-label">Select Specialist / Hospital</label>
+            <select id="modalDoctorSelect" class="form-control" required onchange="onDoctorSelectChange()">
+              <!-- Options populated dynamically -->
+            </select>
+          </div>
+
+          <!-- Consultation Type -->
+          <div class="form-group">
+            <label class="form-label">Consultation Mode</label>
+            <div style="display: flex; gap: 1rem;">
+              <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.9rem;">
+                <input type="radio" name="modalConsultType" value="In-Person" checked> 🏥 In-Person Hospital OPD
+              </label>
+              <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.9rem;">
+                <input type="radio" name="modalConsultType" value="Virtual Teleconsultation"> 💻 Video Telehealth
+              </label>
+            </div>
+          </div>
+
+          <!-- Date & Slot -->
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Appointment Date</label>
+              <input type="date" id="modalDateInput" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Selected Time Slot</label>
+              <input type="text" id="modalSelectedSlot" class="form-control" readonly placeholder="Click a slot below" required>
+            </div>
+          </div>
+
+          <!-- Slot picker chips -->
+          <div class="form-group">
+            <label class="form-label">Available Time Slots for this Doctor</label>
+            <div class="slot-selection-grid" id="modalSlotsContainer">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- Patient Information -->
+          <hr style="border: 0; border-top: 1px solid var(--border); margin: 1.2rem 0;">
+          <h4 style="font-size: 1rem; margin-bottom: 0.8rem; color: var(--text-dark);">Patient Intake Details</h4>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Patient Full Name *</label>
+              <input type="text" id="modalPatientName" class="form-control" placeholder="e.g. K. Senthil Nathan" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Number *</label>
+              <input type="tel" id="modalPatientPhone" class="form-control" placeholder="+91 98401 23456" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" id="modalPatientEmail" class="form-control" placeholder="senthil@example.com">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Age</label>
+                <input type="number" id="modalPatientAge" class="form-control" min="1" max="120" value="38">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Gender</label>
+                <select id="modalPatientGender" class="form-control">
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Symptoms / Reason for Consultation *</label>
+            <textarea id="modalSymptoms" class="form-control" rows="2" placeholder="Describe symptoms (e.g. chest discomfort, chronic headaches, skin allergy)..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Additional Medical Notes / Allergies (Optional)</label>
+            <input type="text" id="modalNotes" class="form-control" placeholder="Any previous diagnoses, prescriptions, or doctor preferences">
+          </div>
+
+          <div class="modal-footer" style="padding-left: 0; padding-right: 0;">
+            <button type="button" class="btn btn-secondary" onclick="closeBookingModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="modalSubmitBtn">Confirm Appointment</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer style="background: #0f172a; color: #94a3b8; padding: 3rem 1.5rem 2rem; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+      <div>
+        <h3 style="color: white; font-size: 1.2rem; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span style="color: var(--primary);">✚</span> CarePulse Chennai
+        </h3>
+        <p style="font-size: 0.9rem; line-height: 1.6;">Integrated Chennai healthcare portal connecting patients to leading multispecialty hospitals across Greams Road, Alwarpet, Manapakkam, Vadapalani, and Adyar.</p>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: 1rem; margin-bottom: 0.8rem;">Quick Links</h4>
+        <ul style="list-style: none; font-size: 0.9rem; line-height: 2;">
+          <li><a href="#search-section" style="color: #94a3b8; text-decoration: none;">Search Chennai Doctors</a></li>
+          <li><a href="#services-section" style="color: #94a3b8; text-decoration: none;">Available Master Checks</a></li>
+          <li><a href="appointments.html" style="color: #94a3b8; text-decoration: none;">My Appointments</a></li>
+          <li><a href="admin.html" style="color: #94a3b8; text-decoration: none;">🔒 Doctor & Staff Portal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: 1rem; margin-bottom: 0.8rem;">Chennai Emergency & OPD</h4>
+        <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">🚨 <strong>24/7 Helpline:</strong> +91 44 2829 0200 / 108</p>
+        <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">✉️ <strong>Support:</strong> chennai.care@carepulse-health.org</p>
+        <p style="font-size: 0.9rem;">📍 <strong>Central Desk:</strong> 21 Greams Lane, Thousand Lights, Chennai 600006</p>
+      </div>
+    </div>
+    <div style="text-align: center; border-top: 1px solid #1e293b; padding-top: 1.5rem; font-size: 0.82rem;">
+      © 2026 CarePulse Chennai Healthcare Network. Directed by Abhilash. All rights reserved.
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Autofill patient details from logged-in session
+    document.addEventListener('DOMContentLoaded', () => {
+      const pRaw = localStorage.getItem('carepulse_patient_auth');
+      if (pRaw) {
+        try {
+          const p = JSON.parse(pRaw);
+          const badge = document.getElementById('patientWelcomeBadge');
+          if (badge) badge.textContent = `👤 ${p.name}`;
+          const nameInput = document.getElementById('modalPatientName');
+          if (nameInput && !nameInput.value) nameInput.value = p.name;
+          const emailInput = document.getElementById('modalPatientEmail');
+          if (emailInput && !emailInput.value) emailInput.value = p.username;
+        } catch (e) {}
+      }
+    });
+
+    function logoutPatient() {
+      localStorage.removeItem('carepulse_patient_auth');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

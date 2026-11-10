@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff & Doctor Portal | CarePulse Healthcare</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    .login-container {
+      max-width: 440px;
+      margin: 4rem auto;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.2rem;
+      box-shadow: var(--shadow-lg);
+    }
+    .demo-credential-chip {
+      background: #f1f5f9;
+      border: 1px dashed #cbd5e1;
+      border-radius: 8px;
+      padding: 0.6rem 0.8rem;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-bottom: 0.5rem;
+    }
+    .demo-credential-chip:hover {
+      background: var(--primary-light);
+      border-color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon" style="background: linear-gradient(135deg, #4f46e5, #0284c7);">🩺</div>
+        <span>CarePulse<span style="color: var(--primary)">Staff</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Patient Portal</a></li>
+        <li><a href="appointments.html" class="nav-link">Patient Appointments</a></li>
+        <li><a href="admin.html" class="nav-link active">Doctor Dashboard</a></li>
+      </ul>
+
+      <div class="nav-actions" id="navAuthSection">
+        <span class="badge badge-cancelled" id="authStatusBadge">🔒 Restricted Access</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Login Gate Screen (Shown when not authenticated) -->
+  <div id="loginGateSection" class="container">
+    <div class="login-container">
+      <div style="text-align: center; margin-bottom: 1.8rem;">
+        <div style="width: 56px; height: 56px; background: var(--primary-light); color: var(--primary); border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 0.8rem;">
+          🔒
+        </div>
+        <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-dark); margin-bottom: 0.3rem;">Doctor & Staff Access</h2>
+        <p style="color: var(--text-muted); font-size: 0.88rem;">This portal contains protected patient clinical data. Please authenticate with your medical credentials.</p>
+      </div>
+
+      <form id="doctorLoginForm" onsubmit="handleLoginSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Doctor / Staff Email ID</label>
+          <input type="text" id="loginUsername" class="form-control" placeholder="doctor@carepulse.org" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="loginSubmitBtn" style="width: 100%; margin-top: 0.5rem; padding: 0.75rem;">
+          🔐 Sign In to Doctor Portal
+        </button>
+      </form>
+
+      <!-- Quick Demo Credentials for Convenience -->
+      <div style="margin-top: 1.8rem; border-top: 1px solid var(--border); padding-top: 1.2rem;">
+        <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem;">
+          Authorized Access Credentials (Click to Auto-fill):
+        </div>
+
+        <div class="demo-credential-chip" onclick="fillCredentials('abhilash@carepulse.org', 'abhilash123')">
+          <div style="font-weight: 700; color: #0284c7;">👑 Portal Owner: Abhilash (Director)</div>
+          <div style="color: var(--text-muted);">Email: <code>abhilash@carepulse.org</code> | Pass: <code>abhilash123</code></div>
+        </div>
+
+        <div class="demo-credential-chip" onclick="fillCredentials('dr.karthik@apollo.chennai.in', 'apollo123')">
+          <div style="font-weight: 600; color: #0d9488;">👨‍⚕️ Dr. K. Karthikeyan (Cardiology • Apollo Hospitals, Greams Rd)</div>
+          <div style="color: var(--text-muted);">Email: <code>dr.karthik@apollo.chennai.in</code> | Pass: <code>apollo123</code></div>
+        </div>
+
+        <div class="demo-credential-chip" onclick="fillCredentials('dr.priya@kauvery.chennai.in', 'kauvery123')">
+          <div style="font-weight: 600; color: #7c3aed;">👩‍⚕️ Dr. Priya Sundaram (Pediatrics • Kauvery Hospital, Alwarpet)</div>
+          <div style="color: var(--text-muted);">Email: <code>dr.priya@kauvery.chennai.in</code> | Pass: <code>kauvery123</code></div>
+        </div>
+
+        <div class="demo-credential-chip" onclick="fillCredentials('dr.anand@miot.chennai.in', 'miot123')">
+          <div style="font-weight: 600; color: #ea580c;">👨‍⚕️ Dr. Anand Natarajan (Orthopedics • MIOT International)</div>
+          <div style="color: var(--text-muted);">Email: <code>dr.anand@miot.chennai.in</code> | Pass: <code>miot123</code></div>
+        </div>
+
+        <div class="demo-credential-chip" onclick="fillCredentials('admin@carepulse.org', 'admin123')">
+          <div style="font-weight: 600; color: #475569;">🏥 Chennai Hospitals Central Operations Desk</div>
+          <div style="color: var(--text-muted);">Email: <code>admin@carepulse.org</code> | Pass: <code>admin123</code></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Authenticated Protected Dashboard -->
+  <div id="protectedDashboardSection" class="container" style="display: none;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+      <div>
+        <div class="hero-badge" style="background: var(--primary-light); color: var(--primary); margin-bottom: 0.5rem;">👨‍⚕️ Clinical Operations Dashboard</div>
+        <h1 style="font-size: 2rem; font-weight: 800; color: var(--text-dark); margin-bottom: 0.3rem;">Doctor & Staff Management</h1>
+        <p style="color: var(--text-muted); font-size: 1rem;" id="authenticatedUserGreeting">Welcome to the medical consultation queue.</p>
+      </div>
+      <div style="display: flex; gap: 0.8rem;">
+        <button class="btn btn-secondary" onclick="loadAdminData()">🔄 Refresh Queue</button>
+        <button class="btn btn-outline" onclick="handleLogout()" style="color: var(--danger); border-color: var(--danger);">🚪 Logout</button>
+      </div>
+    </div>
+
+    <!-- Metric Cards -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; margin-bottom: 2.2rem;">
+      <div class="stat-item" style="text-align: left; padding: 1.2rem;">
+        <div style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">ACTIVE DOCTORS</div>
+        <div class="stat-value" id="adminDoctorsCount" style="color: var(--primary); font-size: 2rem;">8</div>
+        <div style="font-size: 0.78rem; color: #10b981;">Across 8 clinical specialties</div>
+      </div>
+      <div class="stat-item" style="text-align: left; padding: 1.2rem;">
+        <div style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">PENDING / UPCOMING</div>
+        <div class="stat-value" id="adminUpcomingCount" style="color: var(--warning); font-size: 2rem;">0</div>
+        <div style="font-size: 0.78rem; color: var(--text-muted);">Require medical review</div>
+      </div>
+      <div class="stat-item" style="text-align: left; padding: 1.2rem;">
+        <div style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">COMPLETED SESSIONS</div>
+        <div class="stat-value" id="adminCompletedCount" style="color: var(--success); font-size: 2rem;">0</div>
+        <div style="font-size: 0.78rem; color: #10b981;">Consultations concluded</div>
+      </div>
+      <div class="stat-item" style="text-align: left; padding: 1.2rem;">
+        <div style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">TOTAL APPOINTMENTS</div>
+        <div class="stat-value" id="adminTotalCount" style="color: #6366f1; font-size: 2rem;">0</div>
+        <div style="font-size: 0.78rem; color: var(--text-muted);">Registered in hospital system</div>
+      </div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="data-table-container">
+      <div style="padding: 1.2rem 1.4rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-dark);">Appointment Queue & Records</h3>
+        <input type="text" id="adminSearchInput" class="form-control" style="max-width: 320px;" placeholder="Filter queue by patient, doctor, ID..." oninput="filterAdminQueue()">
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Ref ID</th>
+            <th>Patient Details</th>
+            <th>Assigned Doctor</th>
+            <th>Date & Time</th>
+            <th>Mode</th>
+            <th>Status</th>
+            <th>Clinical Notes</th>
+            <th style="text-align: right;">Action</th>
+          </tr>
+        </thead>
+        <tbody id="adminTableBody">
+          <!-- Populated dynamically -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Clinical Diagnosis Modal -->
+  <div class="modal-overlay" id="doctorNotesModal">
+    <div class="modal-box" style="max-width: 550px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Doctor Consultation & Notes</h3>
+        <button class="modal-close" onclick="closeDoctorNotesModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="adminApptId">
+        <div class="form-group">
+          <label class="form-label">Patient</label>
+          <input type="text" id="adminPatientInfo" class="form-control" readonly disabled>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Chief Complaint / Symptoms</label>
+          <textarea id="adminSymptoms" class="form-control" rows="2" readonly disabled></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Physician Diagnosis & Prescription Notes</label>
+          <textarea id="adminNotesInput" class="form-control" rows="4" placeholder="Enter clinical assessment, prescription drugs, recommended diagnostic tests, or follow-up instructions..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Update Status</label>
+          <select id="adminStatusSelect" class="form-control">
+            <option value="Confirmed">Confirmed</option>
+            <option value="Completed">Mark as Completed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeDoctorNotesModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="submitDoctorNotes()">Save Clinical Record</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

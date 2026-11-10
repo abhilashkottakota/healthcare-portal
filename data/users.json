@@ -1,0 +1,101 @@
+[
+  {
+    "email": "abhilash@carepulse.org",
+    "password": "abhilash123",
+    "name": "Abhilash (Portal Owner & Director)",
+    "phone": "+91 98400 00001",
+    "role": "Admin",
+    "hospital": "CarePulse Chennai Central Network",
+    "specialty": "Hospital Administration"
+  },
+  {
+    "email": "dr.priya@kauvery.chennai.in",
+    "password": "kauvery123",
+    "name": "Dr. Priya Sundaram",
+    "phone": "+91 98402 33445",
+    "role": "Doctor",
+    "hospital": "Kauvery Hospital, Alwarpet, Chennai",
+    "specialty": "Pediatrics"
+  },
+  {
+    "email": "doctor@carepulse.org",
+    "password": "doctor123",
+    "name": "Dr. Meera Krishnan",
+    "phone": "+91 98404 77889",
+    "role": "Doctor",
+    "hospital": "Gleneagles Global Health City, Chennai",
+    "specialty": "Dermatology"
+  },
+  {
+    "email": "patient@carepulse.org",
+    "password": "patient123",
+    "name": "Patient Member (Chennai)",
+    "phone": "+91 97910 88990",
+    "role": "Patient",
+    "hospital": "",
+    "specialty": ""
+  },
+  {
+    "email": "deepa.r@example.com",
+    "password": "patient123",
+    "name": "Deepa Raghavan",
+    "phone": "+91 98842 34567",
+    "role": "Patient",
+    "hospital": "",
+    "specialty": ""
+  },
+  {
+    "email": "senthil@example.com",
+    "password": "patient123",
+    "name": "K. Senthil Nathan",
+    "phone": "+91 98401 23456",
+    "role": "Patient",
+    "hospital": "",
+    "specialty": ""
+  },
+  {
+    "email": "abhilashkottakota73@gmail.com",
+    "password": "abhilash",
+    "name": "abhilash kottakota",
+    "phone": "",
+    "role": "Patient",
+    "hospital": "Apollo Hospitals, Greams Road, Chennai",
+    "specialty": "Cardiology"
+  },
+  {
+    "email": "abhilash@carepulse.org",
+    "password": "abhilash123",
+    "name": "Abhilash (Portal Owner & Director)",
+    "phone": "+91 98400 00001",
+    "role": "Admin",
+    "hospital": "CarePulse Chennai Central Network",
+    "specialty": "Hospital Administration"
+  },
+  {
+    "email": "dr.anand@miot.chennai.in",
+    "password": "miot123",
+    "name": "Dr. Anand Natarajan",
+    "phone": "+91 98403 55667",
+    "role": "Doctor",
+    "hospital": "MIOT International, Manapakkam, Chennai",
+    "specialty": "Orthopedics"
+  },
+  {
+    "email": "admin@carepulse.org",
+    "password": "admin123",
+    "name": "Chennai Central Hospital Operations",
+    "phone": "+91 44 2829 0200",
+    "role": "Admin",
+    "hospital": "All Partner Facilities",
+    "specialty": "Operations"
+  },
+  {
+    "email": "dr.karthik@apollo.chennai.in",
+    "password": "apollo123",
+    "name": "Dr. K. Karthikeyan",
+    "phone": "+91 98401 11223",
+    "role": "Doctor",
+    "hospital": "Apollo Hospitals, Greams Road, Chennai",
+    "specialty": "Cardiology"
+  }
+]
